@@ -1,0 +1,17 @@
+version: '2.1'
+orbs:
+  evals: circleci/evals@2.0
+jobs:
+  evals-test-assertions-job:
+    docker:
+      - image: cimg/base:current-22.04
+    steps:
+      - checkout
+      - evals/test:
+          assertions: assertions.json
+          metrics: eval_results.json
+          results: test_results.xml
+workflows:
+  test-eval-workflow:
+    jobs:
+      - evals-test-assertions-job
