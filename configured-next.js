@@ -1,10 +1,9 @@
-import { defineConfig } from 'astro/config';
-import react from "@astrojs/react";
-import tailwindcss from "@tailwindcss/vite";
-export default defineConfig({
-  integrations: [react()],
-  output: "server", 
-  vite: {
-    plugins: [tailwindcss()]
-  }
-});
+// File: next.config.js
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  output: 'standalone', // Similar to Astro's "server" output
+};
+
+module.exports = nextConfig;
