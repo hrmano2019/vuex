@@ -1,0 +1,44 @@
+# config.yml
+default: &default
+  firebase:
+    apiKey: ${FIREBASE_API_KEY}
+    authDomain: ${FIREBASE_AUTH_DOMAIN}
+    databaseURL: ${FIREBASE_DATABASE_URL}
+    projectId: ${FIREBASE_PROJECT_ID}
+    storageBucket: ${FIREBASE_STORAGE_BUCKET}
+    messagingSenderId: ${FIREBASE_MESSAGING_SENDER_ID}
+    appId: ${FIREBASE_APP_ID}
+
+environments:
+  development:
+    <<: *default
+    firebase:
+      apiKey: ${DEV_FIREBASE_API_KEY}
+      authDomain: ${DEV_FIREBASE_AUTH_DOMAIN}
+      databaseURL: ${DEV_FIREBASE_DATABASE_URL}
+      projectId: ${DEV_FIREBASE_PROJECT_ID}
+      storageBucket: ${DEV_FIREBASE_STORAGE_BUCKET}
+      messagingSenderId: ${DEV_FIREBASE_MESSAGING_SENDER_ID}
+      appId: ${DEV_FIREBASE_APP_ID}
+
+  staging:
+    <<: *default
+    firebase:
+      apiKey: ${STAGING_FIREBASE_API_KEY}
+      authDomain: ${STAGING_FIREBASE_AUTH_DOMAIN}
+      databaseURL: ${STAGING_FIREBASE_DATABASE_URL}
+      projectId: ${STAGING_FIREBASE_PROJECT_ID}
+      storageBucket: ${STAGING_FIREBASE_STORAGE_BUCKET}
+      messagingSenderId: ${STAGING_FIREBASE_MESSAGING_SENDER_ID}
+      appId: ${STAGING_FIREBASE_APP_ID}
+
+  production:
+    <<: *default
+    firebase:
+      apiKey: ${PROD_FIREBASE_API_KEY}
+      authDomain: ${PROD_FIREBASE_AUTH_DOMAIN}
+      databaseURL: ${PROD_FIREBASE_DATABASE_URL}
+      projectId: ${PROD_FIREBASE_PROJECT_ID}
+      storageBucket: ${PROD_FIREBASE_STORAGE_BUCKET}
+      messagingSenderId: ${PROD_FIREBASE_MESSAGING_SENDER_ID}
+      appId: ${PROD_FIREBASE_APP_ID}
