@@ -1,0 +1,10 @@
+// firebaseConfig.ts
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
+import config from "./firebaseConfig.json"; // JSON file with firebase credentials
+
+// Initialize Firebase using JSON config
+const app = initializeApp(config.firebase);
+
+// Export Realtime Database instance
+export const db = getDatabase(app);
