@@ -1,0 +1,11 @@
+import { initializeApp } from "firebase/app";
+import { getDatabase } from "firebase/database";
+import config from "./firebaseConfig.json";
+
+// Pick environment based on NODE_ENV (default to development)
+const env = process.env.NODE_ENV || "development";
+const firebaseConfig = config.environments[env].firebase;
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+export const db = getDatabase(app);
