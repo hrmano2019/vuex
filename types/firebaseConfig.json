@@ -1,0 +1,37 @@
+{
+  "environments": {
+    "development": {
+      "firebase": {
+        "apiKey": "DEV_API_KEY",
+        "authDomain": "dev-inventory-app.firebaseapp.com",
+        "databaseURL": "https://dev-inventory-app-default-rtdb.firebaseio.com",
+        "projectId": "dev-inventory-app",
+        "storageBucket": "dev-inventory-app.appspot.com",
+        "messagingSenderId": "111111111111",
+        "appId": "1:111111111111:web:devabcdef123456"
+      }
+    },
+    "staging": {
+      "firebase": {
+        "apiKey": "STAGING_API_KEY",
+        "authDomain": "staging-inventory-app.firebaseapp.com",
+        "databaseURL": "https://staging-inventory-app-default-rtdb.firebaseio.com",
+        "projectId": "staging-inventory-app",
+        "storageBucket": "staging-inventory-app.appspot.com",
+        "messagingSenderId": "222222222222",
+        "appId": "1:222222222222:web:stagingabcdef123456"
+      }
+    },
+    "production": {
+      "firebase": {
+        "apiKey": "PROD_API_KEY",
+        "authDomain": "inventory-app.firebaseapp.com",
+        "databaseURL": "https://inventory-app-default-rtdb.firebaseio.com",
+        "projectId": "inventory-app",
+        "storageBucket": "inventory-app.appspot.com",
+        "messagingSenderId": "333333333333",
+        "appId": "1:333333333333:web:prodabcdef123456"
+      }
+    }
+  }
+}
