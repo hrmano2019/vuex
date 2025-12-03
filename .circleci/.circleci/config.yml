@@ -1,0 +1,42 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@5.0.2
+
+jobs:
+  build:
+    docker:
+      - image: cimg/node:20.0
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Build React App
+          command: npm run build
+      - run:
+          name: Run Tests
+          command: npm test
+
+  deploy:
+    docker:
+      - image: cimg/node:20.0
+    steps:
+      - checkout
+      - run:
+          name: Install Firebase CLI
+          command: npm install -g firebase-tools
+      - run:
+          name: Deploy to Firebase Hosting
+          command: firebase deploy --only hosting,database --token $FIREBASE_DEPLOY_TOKEN
+
+workflows:
+  build_and_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
