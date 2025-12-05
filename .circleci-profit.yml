@@ -1,0 +1,61 @@
+version: 2.1
+jobs:
+  deploy_prod:
+    docker:
+      # Use a base compute shell image (e.g., Bash)
+      - image: cimg/base:2024.01
+    
+    steps:
+      # ... (previous steps: checkout, build, test)
+      
+      - run:
+          name: 💰 Minimum Profit Margin Verification
+          command: |
+            #!/bin/bash
+            
+            # --- 1. Define inputs from environment variables ---
+            FIXED_COSTS="${PROD_FIXED_COSTS:-10000}"       # Default if not defined
+            VAR_COST_PER_UNIT="${PROD_VAR_COST:-5}"
+            SELLING_PRICE="${PROD_SELLING_PRICE:-20}"
+            PRODUCTION_VOLUME="${PROD_VOLUME:-2000}"
+            MIN_MARGIN="${MIN_PROFIT_MARGIN:-15}"
+            
+            # --- 2. Calculate key metrics (React component logic) ---
+            
+            # Calculate Total Variable Cost
+            TOTAL_VAR_COST=$(echo "scale=2; $VAR_COST_PER_UNIT * $PRODUCTION_VOLUME" | bc)
+            
+            # Calculate Total Cost
+            TOTAL_COST=$(echo "scale=2; $FIXED_COSTS + $TOTAL_VAR_COST" | bc)
+            
+            # Calculate Total Revenue
+            TOTAL_REVENUE=$(echo "scale=2; $SELLING_PRICE * $PRODUCTION_VOLUME" | bc)
+            
+            # Calculate Total Profit
+            TOTAL_PROFIT=$(echo "scale=2; $TOTAL_REVENUE - $TOTAL_COST" | bc)
+            
+            # Calculate Profit Margin (Profit / Revenue) * 100
+            if [ "$(echo "$TOTAL_REVENUE > 0" | bc)" -eq 1 ]; then
+                PROFIT_MARGIN=$(echo "scale=2; ($TOTAL_PROFIT / $TOTAL_REVENUE) * 100" | bc)
+            else
+                PROFIT_MARGIN=0
+            fi
+
+            # --- 3. Output and Dynamic Verification ---
+            
+            echo "--- CI/CD Profitability Analysis ---"
+            echo "Calculated Total Profit: $${TOTAL_PROFIT}"
+            echo "Calculated Profit Margin: ${PROFIT_MARGIN}%"
+            echo "Minimum Required Threshold: ${MIN_MARGIN}%"
+            
+            # Check if the calculated margin is below the minimum threshold
+            # The 'bc' command is used for floating point comparisons
+            if [ "$(echo "$PROFIT_MARGIN < $MIN_MARGIN" | bc)" -eq 1 ]; then
+                echo "🚨 VERIFICATION FAILED: Margin (${PROFIT_MARGIN}%) is below the threshold of ${MIN_MARGIN}%."
+                echo "Deployment blocked to avoid launching a non-profitable product."
+                exit 1 # Fail the pipeline step
+            else
+                echo "✅ SUCCESS: Profit margin is sufficient. Deployment can continue."
+            fi
+
+      # ... (Next step: firebase deploy --token "$FIREBASE_DEPLOY_TOKEN")
