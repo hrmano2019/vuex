@@ -1,17 +1,43 @@
-version: '2.1'
+version: 2.1
+
 orbs:
-  evals: circleci/evals@2.0
+  node: circleci/node@5.0.2
+
 jobs:
-  evals-test-assertions-job:
+  build:
     docker:
-      - image: cimg/base:current-22.04
+      - image: cimg/node:20.0
     steps:
       - checkout
-      - evals/test:
-          assertions: assertions.json
-          metrics: eval_results.json
-          results: test_results.xml
+      - node/install-packages:
+          pkg-manager: npm
+      - run:
+          name: Build React App
+          command: npm run build
+      - run:
+          name: Run Tests
+          command: npm test
+
+  deploy:
+    docker:
+      - image: cimg/node:20.0
+    steps:
+      - checkout
+      - run:
+          name: Install Firebase CLI
+          command: npm install -g firebase-tools
+      - run:
+          name: Deploy to Firebase Hosting
+          command: firebase deploy --only hosting,database --token $FIREBASE_DEPLOY_TOKEN
+
 workflows:
-  test-eval-workflow:
+  build_and_deploy:
     jobs:
-      - evals-test-assertions-job
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
+
