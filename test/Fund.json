@@ -1,0 +1,88 @@
+{
+    "$schema": "https://fundingjson.org/schema/v1.1.0.json",
+    "version": "v1.1.0",
+    "entity": {
+        "type": "organization",
+        "role": "maintainer",
+        "name": "TECH-SYSTEM APPLIED (TSA)",
+        "email": "vigoshermano@gmail.com",
+        "phone": "+243[977135868]",
+        "description": "Technology integrator based in Goma (DRC), specializing in Digital Public Infrastructures (DPI) for food sovereignty and media independence in Central Africa.",
+        "webpageUrl": {
+            "url": "https://github.com/hrmano2019]/cawg-os",
+            "wellKnown": "https://github.com//hrmano2019/cawg-os/blob/main/.well-known/funding-manifest-urls"
+        }
+    },
+    "projects": [
+        {
+            "guid": "cawg-os-platform",
+            "name": "CAWG-OS",
+            "description": "Open Source software infrastructure for agri-industrial traceability, cold chain management and drone telemetry in areas with degraded connectivity.",
+            "webpageUrl": {
+                "url": "https://github.com/[TON_NOM_UTILISATEUR]/cawg-os"
+            },
+            "repositoryUrl": {
+                "url": "https://github.com/[TON_NOM_UTILISATEUR]/cawg-os",
+                "wellKnown": "https://github.com/[TON_NOM_UTILISATEUR]/cawg-os/blob/main/.well-known/funding-manifest-urls"
+            },
+            "licenses": ["spdx:Apache-2.0"],
+            "tags": ["DPI", "AgroTech", "IoT", "Offline-First", "DRC", "Resilience"]
+        }
+    ],
+    "funding": {
+        "channels": [
+            {
+                "guid": "bank-transfer-drc",
+                "type": "bank",
+                "address": "Goma, Nord-Kivu, RDC",
+                "description": "Direct bank transfer for institutional grants. Contact vigoshermano@gmail.com for SWIFT/IBAN details."
+            },
+            {
+                "guid": "mobile-money-drc",
+                "type": "payment-provider",
+                "address": "https://pay.tsa-goma.cd/support",
+                "description": "Local support via M-Pesa or Airtel Money for community maintenance."
+            }
+        ],
+        "plans": [
+            {
+                "guid": "dsk-deployment",
+                "status": "active",
+                "name": "Digital Survival Kit",
+                "description": "Funding for a complete unit (Raspberry Pi Hub + LoRa Antenna + Solar System) for a rural cooperative.",
+                "amount": 425,
+                "currency": "USD",
+                "frequency": "one-time",
+                "channels": ["bank-transfer-drc"]
+            },
+            {
+                "guid": "dev-maintenance",
+                "status": "active",
+                "name": "Maintenance Logicielle",
+                "description": "Monthly support for the development of open-source modules and API updates.",
+                "amount": 1000,
+                "currency": "USD",
+                "frequency": "monthly",
+                "channels": ["bank-transfer-drc", "mobile-money-drc"]
+            }
+        ],
+        "history": [
+            {
+                "year": 2024,
+                "income": 5000,
+                "expenses": 4500,
+                "taxes": 0,
+                "currency": "USD",
+                "description": "Hardware prototyping phase in Masisi using own funds."
+            },
+            {
+                "year": 2025,
+                "income": 18000,
+                "expenses": 12000,
+                "taxes": 500,
+                "currency": "USD",
+                "description": "Development of the IoT module and deployment of the Cold-Chain pilot."
+            }
+        ]
+    }
+}
