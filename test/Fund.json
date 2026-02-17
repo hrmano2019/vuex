@@ -9,7 +9,7 @@
         "phone": "+243[977135868]",
         "description": "Technology integrator based in Goma (DRC), specializing in Digital Public Infrastructures (DPI) for food sovereignty and media independence in Central Africa.",
         "webpageUrl": {
-            "url": "https://github.com/hrmano2019]/cawg-os",
+            "url": "https://github.com/hrmano2019/cawg-os",
             "wellKnown": "https://github.com//hrmano2019/cawg-os/blob/main/.well-known/funding-manifest-urls"
         }
     },
@@ -19,11 +19,11 @@
             "name": "CAWG-OS",
             "description": "Open Source software infrastructure for agri-industrial traceability, cold chain management and drone telemetry in areas with degraded connectivity.",
             "webpageUrl": {
-                "url": "https://github.com/[TON_NOM_UTILISATEUR]/cawg-os"
+                "url": "https://github.com/hrmano2019/cawg-os"
             },
             "repositoryUrl": {
-                "url": "https://github.com/[TON_NOM_UTILISATEUR]/cawg-os",
-                "wellKnown": "https://github.com/[TON_NOM_UTILISATEUR]/cawg-os/blob/main/.well-known/funding-manifest-urls"
+                "url": "https://github.com/hrmano2019/cawg-os",
+                "wellKnown": "https://github.com/hrmano2019/cawg-os/blob/main/.well-known/funding-manifest-urls"
             },
             "licenses": ["spdx:Apache-2.0"],
             "tags": ["DPI", "AgroTech", "IoT", "Offline-First", "DRC", "Resilience"]
