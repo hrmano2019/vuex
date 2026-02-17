@@ -2,15 +2,15 @@
     "$schema": "https://fundingjson.org/schema/v1.1.0.json",
     "version": "v1.1.0",
     "entity": {
-        "type": "organization",
+        "type": "organisation",
         "role": "maintainer",
         "name": "TECH-SYSTEM APPLIED (TSA)",
         "email": "vigoshermano@gmail.com",
-        "phone": "+243[977135868]",
+        "phone": "+243977135868",
         "description": "Technology integrator based in Goma (DRC), specializing in Digital Public Infrastructures (DPI) for food sovereignty and media independence in Central Africa.",
         "webpageUrl": {
             "url": "https://github.com/hrmano2019/cawg-os",
-            "wellKnown": "https://github.com//hrmano2019/cawg-os/blob/main/.well-known/funding-manifest-urls"
+            "wellKnown": "https://raw.githubusercontent.com/hrmano2019/cawg-os/main/.well-known/funding-manifest-urls"
         }
     },
     "projects": [
@@ -23,7 +23,7 @@
             },
             "repositoryUrl": {
                 "url": "https://github.com/hrmano2019/cawg-os",
-                "wellKnown": "https://github.com/hrmano2019/cawg-os/blob/main/.well-known/funding-manifest-urls"
+                "wellKnown": "https://raw.githubusercontent.com/hrmano2019/cawg-os/main/.well-known/funding-manifest-urls"
             },
             "licenses": ["spdx:Apache-2.0"],
             "tags": ["DPI", "AgroTech", "IoT", "Offline-First", "DRC", "Resilience"]
