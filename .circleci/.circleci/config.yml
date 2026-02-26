@@ -1,42 +1,36 @@
 version: 2.1
 
-orbs:
-  node: circleci/node@5.0.2
-
 jobs:
-  build:
+  build_and_test:
     docker:
-      - image: cimg/node:20.0
+      - image: cimg/node:18.0   # Use Node 18 (secure, maintained)
+    working_directory: ~/project
     steps:
       - checkout
-      - node/install-packages:
-          pkg-manager: npm
+
+      # Install dependencies
       - run:
-          name: Build React App
+          name: Install dependencies
+          command: npm install
+
+      # Build frontend (Vue.js)
+      - run:
+          name: Build frontend
           command: npm run build
+
+      # Run backend tests (Node.js/Express)
       - run:
-          name: Run Tests
+          name: Run backend tests
           command: npm test
 
-  deploy:
-    docker:
-      - image: cimg/node:20.0
-    steps:
-      - checkout
-      - run:
-          name: Install Firebase CLI
-          command: npm install -g firebase-tools
-      - run:
-          name: Deploy to Firebase Hosting
-          command: firebase deploy --only hosting,database --token $FIREBASE_DEPLOY_TOKEN
+      # Persist build artifacts
+      - persist_to_workspace:
+          root: .
+          paths:
+            - dist
+            - backend
 
 workflows:
   build_and_deploy:
     jobs:
-      - build
-      - deploy:
-          requires:
-            - build
-          filters:
-            branches:
-              only: main
+      - build_and_test
