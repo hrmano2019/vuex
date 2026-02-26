@@ -1,0 +1,58 @@
+{
+  "name": "CAWG-OS Demo API",
+  "version": "1.0.0",
+  "description": "API endpoints for Documents, Archives, and Employment modules",
+  "endpoints": [
+    {
+      "path": "/api/documents",
+      "method": "GET",
+      "description": "Fetch all documents with optional filters",
+      "params": {
+        "filter": "string (optional)"
+      },
+      "response": {
+        "docs": [
+          {
+            "id": "string",
+            "title": "string",
+            "content": "string",
+            "createdAt": "date"
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/archives",
+      "method": "GET",
+      "description": "Fetch archived records with dynamic filters",
+      "params": {
+        "year": "number (optional)",
+        "category": "string (optional)"
+      },
+      "response": {
+        "archives": [
+          {
+            "id": "string",
+            "title": "string",
+            "summary": "string",
+            "year": "number"
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/apply",
+      "method": "POST",
+      "description": "Submit a job application (auth required)",
+      "body": {
+        "name": "string",
+        "email": "string",
+        "motivation": "string"
+      },
+      "response": {
+        "status": "success",
+        "message": "Application saved"
+      }
+    }
+  ]
+}
