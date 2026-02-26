@@ -1,0 +1,9 @@
+build:
+  frontend: vue
+  output_dir: dist
+  commands:
+    - npm install
+    - npm run build
+
+env:
+  VUE_APP_2019hermano_1: ${SECRET_VALUE_1}
