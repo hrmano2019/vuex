@@ -1,0 +1,18 @@
+build:
+  frontend: vue
+  output_dir: dist
+  commands:
+    - npm install
+    - npm run build
+
+functions:
+  api:
+    runtime: nodejs16
+    entry: backend/server.js
+    routes:
+      - path: /api/documents
+        method: GET
+      - path: /api/archives
+        method: GET
+      - path: /api/apply
+        method: POST
