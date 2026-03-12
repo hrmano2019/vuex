@@ -1,36 +1,95 @@
 version: 2.1
 
-jobs:
-  build_and_test:
+executors:
+  node-executor:
     docker:
-      - image: cimg/node:18.0   # Use Node 18 (secure, maintained)
+      - image: cimg/node:20.5.1
     working_directory: ~/project
+
+jobs:
+  install-deps:
+    executor: node-executor
     steps:
       - checkout
-
-      # Install dependencies
+      - restore_cache:
+          keys:
+            - node-modules-{{ checksum "package-lock.json" }}
       - run:
           name: Install dependencies
-          command: npm install
+          command: npm ci
+      - save_cache:
+          key: node-modules-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
 
-      # Build frontend (Vue.js)
+  lint:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-modules-{{ checksum "package-lock.json" }}
+      - run:
+          name: Run ESLint
+          command: npm run lint
+
+  unit-test:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-modules-{{ checksum "package-lock.json" }}
+      - run:
+          name: Run unit tests
+          command: npm test -- --coverage
+      - store_test_results:
+          path: coverage
+      - store_artifacts:
+          path: coverage
+
+  build:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-modules-{{ checksum "package-lock.json" }}
       - run:
           name: Build frontend
           command: npm run build
+      - store_artifacts:
+          path: dist
 
-      # Run backend tests (Node.js/Express)
+  deploy:
+    executor: node-executor
+    steps:
+      - checkout
+      - restore_cache:
+          keys:
+            - node-modules-{{ checksum "package-lock.json" }}
       - run:
-          name: Run backend tests
-          command: npm test
-
-      # Persist build artifacts
-      - persist_to_workspace:
-          root: .
-          paths:
-            - dist
-            - backend
+          name: Deploy to Vercel
+          command: |
+            npm install -g vercel
+            vercel --prod --token $VERCEL_TOKEN --confirm
 
 workflows:
-  build_and_deploy:
+  test-and-deploy:
     jobs:
-      - build_and_test
+      - install-deps
+      - lint:
+          requires:
+            - install-deps
+      - unit-test:
+          requires:
+            - install-deps
+      - build:
+          requires:
+            - unit-test
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: main
