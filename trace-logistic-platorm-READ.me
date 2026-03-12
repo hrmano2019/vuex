@@ -1,0 +1,27 @@
+# Traceability & Logistics Platform
+
+## Overview
+A React-based platform for real-time tracking and commodity management. It integrates categories (palm oil, beverages, agriculture, aquaculture, livestock, personal care) and live shipment tracking.
+
+## Features
+- **Categories Grid**: Manage commodities by sector
+- **Live Tracking**: Monitor shipments in real time
+- **Product List**: Inventory and availability
+- **Commodity Stats**: Overview dashboard
+
+## Demo Data
+See `query.sql` for sample product inserts (Huile de Palme RSPO, Jus de Mangue, Tilapia, Savon Kifebe, etc.).
+
+## CI/CD Pipeline
+- **Install dependencies**: `npm ci`
+- **Build**: `npm run build`
+- **Test**: `npm test -- --coverage`
+- **Deploy**: Vercel CLI with `$VERCEL_TOKEN`
+
+## Environment Variables
+Set in CircleCI project settings:
+- `VERCEL_TOKEN` (for deployment)
+- `DB_URL` (Postgres connection string)
+
+## API Contract
+See [api.json](./api.json) for dependencies and component interactions.
