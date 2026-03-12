@@ -1,0 +1,220 @@
+import { Header } from "@/components/Header";
+import { CategoryCard } from "@/components/CategoryCard";
+import { LiveTrackingCard } from "@/components/LiveTrackingCard";
+import { CommodityStats } from "@/components/CommodityStats";
+import { ProductList } from "@/components/ProductList";
+import { 
+  Droplets, 
+  Heart, 
+  Wine, 
+  Wheat, 
+  Sparkles, 
+  Fish, 
+  Rabbit,
+  ArrowRight,
+  Radio
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+
+const categories = [
+  {
+    title: "RSPO Palm Oil",
+    description: "Certified sustainable traceability",
+    icon: Droplets,
+    itemCount: 245,
+    activeShipments: 34,
+    category: "palm-oil" as const,
+  },
+  {
+    title: "Cholesterol-Free Oils",
+    description: "Health & wellness oils",
+    icon: Heart,
+    itemCount: 128,
+    activeShipments: 18,
+    category: "healthy-oil" as const,
+  },
+  {
+    title: "Beverages",
+    description: "Monitored cold chain",
+    icon: Wine,
+    itemCount: 312,
+    activeShipments: 42,
+    category: "beverages" as const,
+  },
+  {
+    title: "Agriculture",
+    description: "Potatoes, plantains",
+    icon: Wheat,
+    itemCount: 567,
+    activeShipments: 28,
+    category: "agriculture" as const,
+  },
+  {
+    title: "Personal Care",
+    description: "Soaps, cosmetics, Kifebe",
+    icon: Sparkles,
+    itemCount: 423,
+    activeShipments: 15,
+    category: "personal-care" as const,
+  },
+  {
+    title: "Aquaculture",
+    description: "Mikeke, Tilapia, fish",
+    icon: Fish,
+    itemCount: 189,
+    activeShipments: 22,
+    category: "aquaculture" as const,
+  },
+  {
+    title: "Livestock",
+    description: "Rabbits, turkeys",
+    icon: Rabbit,
+    itemCount: 156,
+    activeShipments: 8,
+    category: "livestock" as const,
+  },
+];
+
+const liveShipments = [
+  {
+    productName: "RSPO Palm Oil",
+    batchId: "RSPO-2024-0847",
+    origin: "Bandundu",
+    destination: "Kinshasa",
+    currentLocation: "Kikwit",
+    progress: 65,
+    eta: "2:30 PM",
+    status: "en-route" as const,
+  },
+  {
+    productName: "Premium Mango Juice",
+    batchId: "BEV-2024-1234",
+    origin: "Equateur",
+    destination: "Lubumbashi",
+    currentLocation: "Mbuji-Mayi",
+    temperature: 4,
+    temperatureStatus: "normal" as const,
+    progress: 45,
+    eta: "Tomorrow 8:00 AM",
+    status: "en-route" as const,
+  },
+  {
+    productName: "Fresh Tilapia",
+    batchId: "FISH-2024-0567",
+    origin: "Lake Tanganyika",
+    destination: "Goma",
+    currentLocation: "Uvira",
+    temperature: 2,
+    temperatureStatus: "normal" as const,
+    progress: 78,
+    eta: "4:45 PM",
+    status: "en-route" as const,
+  },
+  {
+    productName: "Artisanal Kifebe Soap",
+    batchId: "SOAP-2024-0891",
+    origin: "Lubumbashi",
+    destination: "Kinshasa",
+    currentLocation: "Kananga",
+    progress: 35,
+    eta: "In 2 days",
+    status: "delayed" as const,
+  },
+];
+
+const Index = () => {
+  return (
+    <div className="min-h-screen bg-background">
+      <Header />
+      
+      <main className="container mx-auto px-4 py-8">
+        {/* Hero Section */}
+        <section className="mb-10">
+          <div className="rounded-2xl gradient-hero border border-border p-8 md:p-10">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-4">
+                <Radio className="h-3 w-3 animate-pulse-live" />
+                Real-Time Tracking
+              </div>
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Traceability & Logistics Platform
+              </h1>
+              <p className="text-lg text-muted-foreground mb-6">
+                Track your commodities in real-time: RSPO oils, fresh products with cold chain monitoring, 
+                agricultural goods, local cosmetics, and livestock across all provinces.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Button className="gradient-primary">
+                  New Tracking
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+                <Button variant="outline">
+                  View Reports
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Stats Overview */}
+        <section className="mb-10">
+          <CommodityStats />
+        </section>
+
+        {/* Categories Grid */}
+        <section className="mb-10">
+          <div className="flex items-center justify-between mb-6">
+            <div>
+              <h2 className="text-xl font-bold text-foreground">Product Categories</h2>
+              <p className="text-sm text-muted-foreground">Manage your commodities by sector</p>
+            </div>
+            <Button variant="ghost" className="text-primary">
+              View All
+              <ArrowRight className="ml-1 h-4 w-4" />
+            </Button>
+          </div>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {categories.map((category, index) => (
+              <CategoryCard key={category.title} {...category} index={index} />
+            ))}
+          </div>
+        </section>
+
+        {/* Live Tracking & Products */}
+        <div className="grid gap-8 lg:grid-cols-2">
+          {/* Live Tracking */}
+          <section>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-xl font-bold text-foreground">Live Tracking</h2>
+                  <span className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-success/10 text-success text-xs font-medium">
+                    <span className="h-1.5 w-1.5 rounded-full bg-success animate-pulse-live" />
+                    Live
+                  </span>
+                </div>
+                <p className="text-sm text-muted-foreground">Active shipments</p>
+              </div>
+            </div>
+            <div className="space-y-4">
+              {liveShipments.map((shipment, index) => (
+                <LiveTrackingCard key={shipment.batchId} {...shipment} index={index} />
+              ))}
+            </div>
+          </section>
+
+          {/* Product List */}
+          <section>
+            <div className="mb-6">
+              <h2 className="text-xl font-bold text-foreground">Products</h2>
+              <p className="text-sm text-muted-foreground">Inventory and availability</p>
+            </div>
+            <ProductList />
+          </section>
+        </div>
+      </main>
+    </div>
+  );
+};
+
+export default Index;
