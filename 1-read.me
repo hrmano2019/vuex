@@ -1,0 +1,26 @@
+# CAWG-OS Frontend Demo
+
+## Overview
+This project demonstrates a React/Vue frontend with sections for Header, Hero, Features, Phases, Provinces, and Contact. It is integrated with CircleCI for CI/CD.
+
+## Components
+- `Header` and `Footer`
+- `HeroSection`
+- `FeaturesSection`
+- `PhasesSection`
+- `ProvincesSection`
+- `ContactSection`
+
+## CI/CD Pipeline
+- **Install dependencies**: `npm ci`
+- **Build**: `npm run build`
+- **Test**: `npm test -- --coverage`
+- **Deploy**: Vercel CLI with `$VERCEL_TOKEN`
+
+## Environment Variables
+Set in CircleCI project settings:
+- `VERCEL_TOKEN` (for deployment)
+- `DB_URL` (if backend integration is needed)
+
+## API Contract
+See [api.json](./api.json) for dependencies and component interactions.
