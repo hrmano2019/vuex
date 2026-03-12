@@ -1,0 +1,26 @@
+{
+  "name": "Healthcare Drone Delivery API",
+  "version": "1.0.0",
+  "endpoints": [
+    {
+      "path": "/api/profiles",
+      "method": "GET",
+      "description": "Fetch healthcare professional profiles"
+    },
+    {
+      "path": "/api/drones",
+      "method": "GET",
+      "description": "List available drones and their status"
+    },
+    {
+      "path": "/api/delivery-requests",
+      "method": "POST",
+      "description": "Create a new delivery request"
+    },
+    {
+      "path": "/api/consultations",
+      "method": "POST",
+      "description": "Schedule a telemedicine consultation"
+    }
+  ]
+}
