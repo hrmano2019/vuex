@@ -1,0 +1,48 @@
+version: 2.1
+
+executors:
+  php-executor:
+    docker:
+      - image: cimg/php:8.2
+    working_directory: ~/repo
+
+jobs:
+  build:
+    executor: php-executor
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: composer install
+
+  test:
+    executor: php-executor
+    steps:
+      - checkout
+      - run:
+          name: Run PHP tests
+          command: ./vendor/bin/phpunit
+
+  deploy:
+    executor: php-executor
+    steps:
+      - checkout
+      - run:
+          name: Deploy to Netlify
+          command: |
+            npm install -g netlify-cli
+            netlify deploy --prod --dir=public --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
+
+workflows:
+  build-test-deploy:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
