@@ -1,0 +1,59 @@
+{
+  "name": "Traceability Logistics Platform",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "^18.0.0",
+    "lucide-react": "^0.268.0",
+    "tailwindcss": "^3.4.0",
+    "express": "^4.18.2"
+  },
+  "components": [
+    {
+      "name": "Header",
+      "description": "Navigation bar with branding and links"
+    },
+    {
+      "name": "CategoryCard",
+      "description": "Displays product category with stats"
+    },
+    {
+      "name": "LiveTrackingCard",
+      "description": "Shows live shipment tracking details"
+    },
+    {
+      "name": "CommodityStats",
+      "description": "Overview of commodity statistics"
+    },
+    {
+      "name": "ProductList",
+      "description": "Inventory and product availability"
+    }
+  ],
+  "interactions": [
+    {
+      "from": "Index",
+      "to": "Header",
+      "type": "render"
+    },
+    {
+      "from": "Index",
+      "to": "CategoryCard",
+      "type": "map categories"
+    },
+    {
+      "from": "Index",
+      "to": "LiveTrackingCard",
+      "type": "map liveShipments"
+    },
+    {
+      "from": "Index",
+      "to": "CommodityStats",
+      "type": "render"
+    },
+    {
+      "from": "Index",
+      "to": "ProductList",
+      "type": "render"
+    }
+  ]
+}
