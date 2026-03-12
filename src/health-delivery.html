@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Healthcare Drone Delivery</title>
+</head>
+<body>
+  <h1>Healthcare Drone Delivery API Demo</h1>
+
+  <h2>Profiles</h2>
+  <form action="api.php" method="GET">
+    <input type="hidden" name="endpoint" value="profiles">
+    <button type="submit">Fetch Profiles</button>
+  </form>
+
+  <h2>Drones</h2>
+  <form action="api.php" method="GET">
+    <input type="hidden" name="endpoint" value="drones">
+    <button type="submit">List Drones</button>
+  </form>
+
+  <h2>Create Delivery Request</h2>
+  <form action="api.php" method="POST">
+    <input type="hidden" name="endpoint" value="delivery-requests">
+    <label>Requester ID: <input type="text" name="requester_id"></label><br>
+    <label>Description: <input type="text" name="description"></label><br>
+    <button type="submit">Submit Request</button>
+  </form>
+
+  <h2>Schedule Consultation</h2>
+  <form action="api.php" method="POST">
+    <input type="hidden" name="endpoint" value="consultations">
+    <label>Patient Profile ID: <input type="text" name="patient_profile_id"></label><br>
+    <label>Doctor Profile ID: <input type="text" name="doctor_profile_id"></label><br>
+    <button type="submit">Schedule</button>
+  </form>
+</body>
+</html>
