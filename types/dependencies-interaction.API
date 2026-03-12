@@ -1,0 +1,42 @@
+{
+  "name": "CAWG-OS Frontend",
+  "version": "1.0.0",
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "vue": "^3.4.0",
+    "vuex": "^4.1.0",
+    "express": "^4.18.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "jest"
+  },
+  "interactions": [
+    {
+      "component": "Header",
+      "description": "Navigation bar with links"
+    },
+    {
+      "component": "HeroSection",
+      "description": "Landing hero with mission statement"
+    },
+    {
+      "component": "FeaturesSection",
+      "description": "Highlights platform features"
+    },
+    {
+      "component": "PhasesSection",
+      "description": "Roadmap phases display"
+    },
+    {
+      "component": "ProvincesSection",
+      "description": "Regional coverage map"
+    },
+    {
+      "component": "ContactSection",
+      "description": "Contact form and info"
+    }
+  ]
+}
