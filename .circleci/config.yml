@@ -1,36 +1,48 @@
 version: 2.1
 
-jobs:
-  build_and_test:
+executors:
+  php-executor:
     docker:
-      - image: cimg/node:18.0   # Use Node 18 (secure, maintained)
-    working_directory: ~/project
+      - image: cimg/php:8.2
+    working_directory: ~/repo
+
+jobs:
+  build:
+    executor: php-executor
     steps:
       - checkout
-
-      # Install dependencies
       - run:
           name: Install dependencies
-          command: npm install
+          command: composer install
 
-      # Build frontend (Vue.js)
+  test:
+    executor: php-executor
+    steps:
+      - checkout
       - run:
-          name: Build frontend
-          command: npm run build
+          name: Run PHP tests
+          command: ./vendor/bin/phpunit
 
-      # Run backend tests (Node.js/Express)
+  deploy:
+    executor: php-executor
+    steps:
+      - checkout
       - run:
-          name: Run backend tests
-          command: npm test
-
-      # Persist build artifacts
-      - persist_to_workspace:
-          root: .
-          paths:
-            - dist
-            - backend
+          name: Deploy to Netlify
+          command: |
+            npm install -g netlify-cli
+            netlify deploy --prod --dir=public --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
 
 workflows:
-  build_and_deploy:
+  build-test-deploy:
     jobs:
-      - build_and_test
+      - build
+      - test:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
