@@ -1,0 +1,10 @@
+runtime: nodejs20
+env: standard
+
+env_variables:
+  NODE_ENV: production
+  NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL}
+
+handlers:
+  - url: /.*
+    script: auto
