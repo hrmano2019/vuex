@@ -1,0 +1,14 @@
+runtime: php82
+env: standard
+
+env_variables:
+  DB_CONNECTION: pgsql
+  DB_HOST: /cloudsql/${CLOUD_SQL_CONNECTION_NAME}
+  DB_PORT: 5432
+  DB_DATABASE: ${POSTGRES_DB}
+  DB_USERNAME: ${POSTGRES_USER}
+  DB_PASSWORD: ${POSTGRES_PASSWORD}
+
+handlers:
+  - url: /.*
+    script: auto
