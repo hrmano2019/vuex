@@ -3,7 +3,7 @@ version: 2.1
 executors:
   php-executor:
     docker:
-      - image: cimg/php:8.2
+      - image: cimg/php:8.2-node # Node inclus pour installer Vercel CLI
     working_directory: ~/repo
 
 jobs:
@@ -14,24 +14,31 @@ jobs:
       - run:
           name: Install dependencies
           command: composer install
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
 
   test:
     executor: php-executor
     steps:
-      - checkout
+      - attach_workspace:
+          at: .
       - run:
           name: Run PHP tests
-          command: ./vendor/bin/phpunit
+          command: ./vendor/bin/phpunit --configuration phpunit.xml
 
-  deploy:
+  deploy_vercel:
     executor: php-executor
     steps:
-      - checkout
+      - attach_workspace:
+          at: .
       - run:
-          name: Deploy to Netlify
+          name: Deploy to Vercel
           command: |
-            npm install -g netlify-cli
-            netlify deploy --prod --dir=public --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
+            sudo npm install -g vercel
+            # Déploiement en production sans interaction
+            vercel --token $VERCEL_TOKEN --prod --yes
 
 workflows:
   build-test-deploy:
@@ -40,9 +47,10 @@ workflows:
       - test:
           requires:
             - build
-      - deploy:
+      - deploy_vercel:
           requires:
             - test
           filters:
             branches:
               only: main
+________________________________________
