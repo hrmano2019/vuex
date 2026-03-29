@@ -1,0 +1,37 @@
+version: 2.1
+
+executors:
+  node-executor:
+    docker:
+      - image: cimg/node:20.0
+      - image: postgres:15
+        environment:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: testdb
+    working_directory: ~/repo
+
+jobs:
+  build:
+    executor: node-executor
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run build
+
+  test:
+    executor: node-executor
+    steps:
+      - checkout
+      - run: npm install
+      - run: dockerize -wait tcp://localhost:5432 -timeout 60s
+      - run: npm run migrate:test
+      - run: npm test
+
+workflows:
+  build-test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
