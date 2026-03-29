@@ -1,0 +1,43 @@
+version: 2.1
+
+executors:
+  php-executor:
+    docker:
+      - image: cimg/php:8.2
+      - image: postgres:15
+        environment:
+          POSTGRES_USER: testuser
+          POSTGRES_PASSWORD: testpassword
+          POSTGRES_DB: testdb
+    working_directory: ~/repo
+
+jobs:
+  build:
+    executor: php-executor
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: composer install
+
+  test:
+    executor: php-executor
+    steps:
+      - checkout
+      - run:
+          name: Wait for Postgres
+          command: dockerize -wait tcp://localhost:5432 -timeout 60s
+      - run:
+          name: Run migrations
+          command: php artisan migrate --env=testing
+      - run:
+          name: Run PHPUnit tests
+          command: ./vendor/bin/phpunit --configuration phpunit.xml
+
+workflows:
+  build-test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
