@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Service {
+  id          String   @id @default(uuid())
+  code        String   @unique
+  name        String
+  description String?
+  createdAt   DateTime @default(now())
+
+  // Relations
+  applications ReliefApplication[]
+}
+
+model ReliefApplication {
+  id            String       @id @default(uuid())
+  applicantName String
+  reliefType    String
+  status        ReliefStatus @default(pending)
+  submittedBy   String?      // references auth.users(id) in Supabase/Vercel
+  createdAt     DateTime     @default(now())
+
+  // Relations
+  service   Service? @relation(fields: [serviceId], references: [id])
+  serviceId String?
+}
+
+model GuidanceResponse {
+  id        String   @id @default(uuid())
+  query     String
+  response  String
+  createdAt DateTime @default(now())
+}
+
+enum ReliefStatus {
+  pending
+  approved
+  rejected
+}
