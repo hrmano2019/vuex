@@ -1,0 +1,212 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Supply Chain / Logistics Theme - Earth tones with vibrant accents */
+    --background: 45 20% 97%;
+    --foreground: 30 25% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 30 25% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 25% 15%;
+
+    --primary: 142 55% 35%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 35 80% 55%;
+    --secondary-foreground: 30 25% 15%;
+
+    --muted: 40 15% 92%;
+    --muted-foreground: 30 15% 45%;
+
+    --accent: 200 70% 45%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 55% 40%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 30 25% 15%;
+
+    --info: 200 70% 50%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 40 20% 88%;
+    --input: 40 20% 88%;
+    --ring: 142 55% 35%;
+
+    --radius: 0.75rem;
+
+    /* Category Colors */
+    --palm-oil: 142 55% 35%;
+    --healthy-oil: 85 60% 45%;
+    --beverages: 200 70% 50%;
+    --agriculture: 35 80% 50%;
+    --personal-care: 320 60% 55%;
+    --aquaculture: 195 80% 45%;
+    --livestock: 25 70% 50%;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(30 25% 15% / 0.05);
+    --shadow-card: 0 4px 12px -2px hsl(30 25% 15% / 0.08);
+    --shadow-elevated: 0 12px 28px -8px hsl(30 25% 15% / 0.12);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 30 15% 10%;
+    --foreground: 40 20% 95%;
+
+    --card: 30 15% 14%;
+    --card-foreground: 40 20% 95%;
+
+    --popover: 30 15% 14%;
+    --popover-foreground: 40 20% 95%;
+
+    --primary: 142 55% 45%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 35 70% 50%;
+    --secondary-foreground: 0 0% 100%;
+
+    --muted: 30 15% 20%;
+    --muted-foreground: 40 15% 60%;
+
+    --accent: 200 70% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 72% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 55% 50%;
+    --warning: 38 92% 55%;
+    --info: 200 70% 55%;
+
+    --border: 30 15% 22%;
+    --input: 30 15% 22%;
+    --ring: 142 55% 45%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)) 0%, hsl(142 55% 28%) 100%);
+  }
+  .gradient-secondary {
+    background: linear-gradient(135deg, hsl(var(--secondary)) 0%, hsl(35 80% 45%) 100%);
+  }
+  .gradient-accent {
+    background: linear-gradient(135deg, hsl(var(--accent)) 0%, hsl(200 70% 38%) 100%);
+  }
+  .gradient-hero {
+    background: linear-gradient(135deg, hsl(var(--primary) / 0.08) 0%, hsl(var(--secondary) / 0.08) 50%, hsl(var(--accent) / 0.08) 100%);
+  }
+  
+  /* Category gradients */
+  .gradient-palm-oil {
+    background: linear-gradient(135deg, hsl(var(--palm-oil)) 0%, hsl(142 55% 28%) 100%);
+  }
+  .gradient-healthy-oil {
+    background: linear-gradient(135deg, hsl(var(--healthy-oil)) 0%, hsl(85 60% 38%) 100%);
+  }
+  .gradient-beverages {
+    background: linear-gradient(135deg, hsl(var(--beverages)) 0%, hsl(200 70% 38%) 100%);
+  }
+  .gradient-agriculture {
+    background: linear-gradient(135deg, hsl(var(--agriculture)) 0%, hsl(35 80% 40%) 100%);
+  }
+  .gradient-personal-care {
+    background: linear-gradient(135deg, hsl(var(--personal-care)) 0%, hsl(320 60% 45%) 100%);
+  }
+  .gradient-aquaculture {
+    background: linear-gradient(135deg, hsl(var(--aquaculture)) 0%, hsl(195 80% 35%) 100%);
+  }
+  .gradient-livestock {
+    background: linear-gradient(135deg, hsl(var(--livestock)) 0%, hsl(25 70% 40%) 100%);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+  
+  .animate-pulse-live {
+    animation: pulse-live 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  @keyframes pulse-live {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
+  }
+}
+
+/* Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.5s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.5s ease-out forwards;
+}
