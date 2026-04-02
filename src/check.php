@@ -1,0 +1,3 @@
+function checkThresholds($pdo, $hardwareId, $metric, $threshold) {
+    // ...
+}
