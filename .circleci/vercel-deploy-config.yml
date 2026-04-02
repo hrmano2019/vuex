@@ -17,6 +17,25 @@ jobs:
             - typecheck
       - test:
           requires:
+          jobs:
+  lint:
+    executor: node-executor
+    steps:
+      - checkout
+      - run: npm install
+      - run: npm run lint
+
+workflows:
+  build-test-deploy:
+    jobs:
+      - lint
+      - build:
+          requires:
+            - lint
+      - test:
+          requires:
+            - build
+
             - build
     executor: node-executor
     steps:
