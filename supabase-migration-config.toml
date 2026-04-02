@@ -1,0 +1,138 @@
+-- Create enum for product categories
+CREATE TYPE public.product_category AS ENUM (
+  'palm_oil', 
+  'healthy_oil', 
+  'beverages', 
+  'agriculture', 
+  'personal_care', 
+  'aquaculture', 
+  'livestock'
+);
+
+-- Create enum for shipment status
+CREATE TYPE public.shipment_status AS ENUM (
+  'pending', 
+  'in_transit', 
+  'delivered', 
+  'delayed', 
+  'cancelled'
+);
+
+-- Create products table
+CREATE TABLE public.products (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name TEXT NOT NULL,
+  category product_category NOT NULL,
+  origin TEXT NOT NULL,
+  stock DECIMAL(12, 2) NOT NULL DEFAULT 0,
+  unit TEXT NOT NULL,
+  price DECIMAL(10, 2) NOT NULL,
+  currency TEXT NOT NULL DEFAULT 'USD',
+  rspo_certified BOOLEAN DEFAULT FALSE,
+  cholesterol_free BOOLEAN DEFAULT FALSE,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
+
+-- Create shipments table with cold-chain monitoring
+CREATE TABLE public.shipments (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  product_id UUID REFERENCES public.products(id) ON DELETE CASCADE NOT NULL,
+  origin TEXT NOT NULL,
+  destination TEXT NOT NULL,
+  status shipment_status NOT NULL DEFAULT 'pending',
+  quantity DECIMAL(12, 2) NOT NULL,
+  unit TEXT NOT NULL,
+  current_temperature DECIMAL(5, 2),
+  min_temperature DECIMAL(5, 2),
+  max_temperature DECIMAL(5, 2),
+  progress INTEGER DEFAULT 0 CHECK (progress >= 0 AND progress <= 100),
+  estimated_arrival TIMESTAMP WITH TIME ZONE,
+  departed_at TIMESTAMP WITH TIME ZONE,
+  delivered_at TIMESTAMP WITH TIME ZONE,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now(),
+  updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
+
+-- Create inventory movements table for tracking
+CREATE TABLE public.inventory_movements (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  product_id UUID REFERENCES public.products(id) ON DELETE CASCADE NOT NULL,
+  shipment_id UUID REFERENCES public.shipments(id) ON DELETE SET NULL,
+  movement_type TEXT NOT NULL CHECK (movement_type IN ('in', 'out', 'adjustment')),
+  quantity DECIMAL(12, 2) NOT NULL,
+  notes TEXT,
+  created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT now()
+);
+
+-- Enable Row Level Security (public read for now, can add auth later)
+ALTER TABLE public.products ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.shipments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.inventory_movements ENABLE ROW LEVEL SECURITY;
+
+-- Create policies for public read access
+CREATE POLICY "Products are viewable by everyone" 
+ON public.products FOR SELECT 
+USING (true);
+
+CREATE POLICY "Shipments are viewable by everyone" 
+ON public.shipments FOR SELECT 
+USING (true);
+
+CREATE POLICY "Inventory movements are viewable by everyone" 
+ON public.inventory_movements FOR SELECT 
+USING (true);
+
+-- Allow anonymous inserts/updates/deletes for demo purposes
+CREATE POLICY "Anyone can insert products" 
+ON public.products FOR INSERT 
+WITH CHECK (true);
+
+CREATE POLICY "Anyone can update products" 
+ON public.products FOR UPDATE 
+USING (true);
+
+CREATE POLICY "Anyone can delete products" 
+ON public.products FOR DELETE 
+USING (true);
+
+CREATE POLICY "Anyone can insert shipments" 
+ON public.shipments FOR INSERT 
+WITH CHECK (true);
+
+CREATE POLICY "Anyone can update shipments" 
+ON public.shipments FOR UPDATE 
+USING (true);
+
+CREATE POLICY "Anyone can delete shipments" 
+ON public.shipments FOR DELETE 
+USING (true);
+
+CREATE POLICY "Anyone can insert inventory movements" 
+ON public.inventory_movements FOR INSERT 
+WITH CHECK (true);
+
+-- Create function to update timestamps
+CREATE OR REPLACE FUNCTION public.update_updated_at_column()
+RETURNS TRIGGER AS $$
+BEGIN
+  NEW.updated_at = now();
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+-- Create triggers for automatic timestamp updates
+CREATE TRIGGER update_products_updated_at
+BEFORE UPDATE ON public.products
+FOR EACH ROW
+EXECUTE FUNCTION public.update_updated_at_column();
+
+CREATE TRIGGER update_shipments_updated_at
+BEFORE UPDATE ON public.shipments
+FOR EACH ROW
+EXECUTE FUNCTION public.update_updated_at_column();
+
+-- Enable realtime for live tracking
+ALTER PUBLICATION supabase_realtime ADD TABLE public.products;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.shipments;
+ALTER PUBLICATION supabase_realtime ADD TABLE public.inventory_movements;
