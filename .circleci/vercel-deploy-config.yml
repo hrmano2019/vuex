@@ -8,6 +8,16 @@ executors:
 
 jobs:
   build:
+  workflows:
+  build-test-deploy:
+    jobs:
+      - typecheck
+      - build:
+          requires:
+            - typecheck
+      - test:
+          requires:
+            - build
     executor: node-executor
     steps:
       - checkout
