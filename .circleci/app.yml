@@ -8,3 +8,10 @@ env_variables:
 handlers:
   - url: /.*
     script: auto
+      deploy-vercel:
+    executor: node-executor
+    steps:
+      - checkout
+      - run: npm install -g vercel
+      - run: vercel --token $VERCEL_TOKEN --prod --confirm
+
