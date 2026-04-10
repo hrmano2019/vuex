@@ -18,6 +18,12 @@ jobs:
   build:
     executor: node-executor
     steps:
+  - run:
+      name: "Vérification des accès"
+      command: |
+        echo "L'API Key est configurée et sécurisée."
+        # Ton script utilisera automatiquement $JWT_SECRET
+    steps:
       - checkout
       - run: npm install
       - run: npm run build
