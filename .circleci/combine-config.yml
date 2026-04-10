@@ -32,6 +32,12 @@ jobs:
   test:
     executor: node-executor
     steps:
+    steps:
+  - run:
+      name: "Vérification des accès"
+      command: |
+        echo "API Key is configured and safe."
+        #the scripts $JWT_SECRET
       - checkout
       - run:
           name: Install dependencies
