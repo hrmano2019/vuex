@@ -6,3 +6,4 @@ CREATE TABLE telemetry_logs (
   value NUMERIC NOT NULL,
   recorded_at TIMESTAMP WITH TIME ZONE DEFAULT now()
 );
+
