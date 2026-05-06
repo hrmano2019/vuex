@@ -1,0 +1,45 @@
+# OptiProd / Tuungana Platform
+
+## What is it?
+OptiProd is a premium web application that runs directly in the browser with no software installation required on the user side.  
+The backend is powered by **Supabase** for data management and uses a CI/CD configuration with **CircleCI** and **Vercel** for automated deployment.
+
+## Features
+- **Real-time calculators**: production capacity, break-even point, salary tax.
+- **Online booking**: simple and accessible forms to reserve goods or services.
+- **Shopping cart**: manage selected items with secure storage in Supabase.
+- **Premium interface**: modern design, smooth animations, responsive and accessible.
+
+## Who made it?
+Developed by **Hrmano2019 and team**, integrating Supabase, Vercel, and CircleCI.
+
+## Ease of Use
+- **Super easy**: runs directly in the browser with an intuitive interface.
+- No software installation required for end users.
+
+## Prerequisites
+- Backend: requires a configured Supabase project, a CircleCI account, and a Vercel project.
+- Environment variables to set:
+  - `SUPABASE_URL`
+  - `SUPABASE_SERVICE_ROLE`
+  - `SUPABASE_DB_URL`
+  - `SUPABASE_PROJECT_REF`
+  - `VERCEL_TOKEN`
+  - `VERCEL_PROJECT_ID`
+
+## Why it matters
+**It will make our lives better by:**
+- Reducing barriers to innovation: easy access to financial and production tools.
+- Accelerating decision-making: real-time calculators for profitability and capacity.
+- Promoting digital inclusion: booking and data management accessible even in low-connectivity environments.
+- Strengthening transparency and trust: secure data and a clear, modern interface.
+
+## Deployment
+1. Configure your environment variables in CircleCI and Vercel.
+2. Run `supabase init` then `supabase link --project-ref <PROJECT_REF>`.
+3. Push your migrations with `supabase db push`.
+4. Deploy to Vercel with `vercel --prod`.
+
+---
+
+✨ This README is ready to be included in your GitHub repository or shared with partners.
