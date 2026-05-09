@@ -1,0 +1,14 @@
+{
+  "supabase": {
+    "url": "https://owrevqqfctnilkbettpy.supabase.co",
+    "db_url": "postgresql://postgres:2023$%@db.owrevqqfctnilkbettpy.supabase.co:5432/postgres",
+    "project_ref": "owrevqqfctnilkbettpy",
+    "publishable_key": "sb_publishable_u4tbAzi0BhtSR2K5n2w2yg_Wuzubz8v",
+    "service_role": "process.env.SUPABASE_SERVICE_ROLE",
+    "access_token": "process.env.SUPABASE_ACCESS_TOKEN"
+  },
+  "vercel": {
+    "project_id": "prj_VOpAReVa5QFQMhUZ2P0TaKbokntQ",
+    "token": "process.env.VERCEL_TOKEN"
+  }
+}
