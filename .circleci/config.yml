@@ -1,55 +1,40 @@
 version: 2.1
 
-executors:
-  php-executor:
-    docker:
-      - image: cimg/php:8.2-node # Node inclus pour installer Vercel CLI
-    working_directory: ~/repo
-
 jobs:
-  build:
-    executor: php-executor
+  build-test-deploy:
+    docker:
+      - image: cimg/node:18.17
     steps:
       - checkout
       - run:
-          name: Install dependencies
-          command: composer install
-      - persist_to_workspace:
-          root: .
-          paths:
-            - .
-
-  test:
-    executor: php-executor
-    steps:
-      - attach_workspace:
-          at: .
+          name: Install Dependencies and CLIs
+          command: |
+            npm install
+            npm install -g supabase vercel
       - run:
-          name: Run PHP tests
-          command: ./vendor/bin/phpunit --configuration phpunit.xml
-
-  deploy_vercel:
-    executor: php-executor
-    steps:
-      - attach_workspace:
-          at: .
+          name: Supabase Authentication
+          # Using non-interactive login for CI
+          command: |
+            supabase login --token $SUPABASE_ACCESS_TOKEN
+            supabase link --project-ref $SUPABASE_PROJECT_REF --password "2023$%"
+      - run:
+          name: Database Sync
+          # Ensure migrations are pushed to the specific DB URL
+          command: supabase db push --db-url $SUPABASE_DB_URL
+      - run:
+          name: Production Build
+          command: npm run build
       - run:
           name: Deploy to Vercel
           command: |
-            sudo npm install -g vercel
-            # Déploiement en production sans interaction
-            vercel --token $VERCEL_TOKEN --prod --yes
+            vercel pull --yes --environment=production --token=$VERCEL_TOKEN
+            vercel build --prod --token=$VERCEL_TOKEN
+            vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN --scope hrmano2019s-projects
 
 workflows:
-  build-test-deploy:
+  build-deploy:
     jobs:
-      - build
-      - test:
-          requires:
-            - build
-      - deploy_vercel:
-          requires:
-            - test
+      - build-test-deploy:
           filters:
             branches:
-              only: main
+              only: circleci-project-setup
