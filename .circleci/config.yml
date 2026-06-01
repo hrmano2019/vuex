@@ -1,40 +1,60 @@
 version: 2.1
 
 jobs:
-  build-test-deploy:
+  # Node.js / Vuex build & test
+  node-build:
     docker:
-      - image: cimg/node:18.17
+      - image: cimg/node:18.20
+      - image: cimg/php:8.2-node
+
+    working_directory: ~/repo
     steps:
       - checkout
       - run:
-          name: Install Dependencies and CLIs
-          command: |
-            npm install
-            npm install -g supabase vercel
+          name: Installer dépendances Node
+          command: npm install
       - run:
-          name: Supabase Authentication
-          # Using non-interactive login for CI
-          command: |
-            supabase login --token $SUPABASE_ACCESS_TOKEN
-            supabase link --project-ref $SUPABASE_PROJECT_REF --password "2023$%"
+          name: Tests Node.js
+          command: npm test
       - run:
-          name: Database Sync
-          # Ensure migrations are pushed to the specific DB URL
-          command: supabase db push --db-url $SUPABASE_DB_URL
-      - run:
-          name: Production Build
+          name: Build Vuex
           command: npm run build
+
+  # PHP / Composer build & test
+  php-build:
+    docker:
+      - image: cimg/php:8.2-node
+    working_directory: ~/repo
+    steps:
+      - checkout
       - run:
-          name: Deploy to Vercel
-          command: |
-            vercel pull --yes --environment=production --token=$VERCEL_TOKEN
-            vercel build --prod --token=$VERCEL_TOKEN
-            vercel deploy --prebuilt --prod --token=$VERCEL_TOKEN --scope hrmano2019s-projects
+          name: Installer dépendances Composer
+          command: composer install --no-interaction --prefer-dist
+      - run:
+          name: Tests PHP
+          command: composer test
+
+  # Déploiement vers Vercel
+  deploy:
+    docker:
+      - image: cimg/node:18.20
+    steps:
+      - checkout
+      - run:
+          name: Déploiement Vercel
+          command: npx vercel --prod --token $VERCEL_TOKEN --confirm
 
 workflows:
-  build-deploy:
+
+  build_and_deploy:
     jobs:
-      - build-test-deploy:
+      - node-build
+      - php-build
+      - deploy:
+          context: moneyphone-prod
+          requires:
+            - node-build
+            - php-build
           filters:
             branches:
-              only: main
+              only: project-setup
