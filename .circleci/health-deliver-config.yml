@@ -1,11 +1,10 @@
-version: 2.1
+ersion: 2.1
 
 executors:
-  php-executor:
+  node-executor:
     docker:
-      - image: cimg/php:8.2-node # Node inclus pour installer Vercel CLI
-    working_directory: ~/repo
-
+      - image: cimg/node:18.17
+    working_directory: ~/project
 jobs:
   build:
     executor: php-executor
