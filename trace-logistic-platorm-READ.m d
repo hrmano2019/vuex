@@ -1,3 +1,79 @@
+Traceability & Logistics Platform
+🎯 Overview
+A React-based platform for real-time tracking and commodity management. Designed for supply chain professionals, it integrates multiple sectors (palm oil, beverages, agriculture, aquaculture, livestock, personal care) with live shipment tracking and inventory visibility.
+
+🚀 Features
+Categories Grid: Manage commodities by sector with modular UI components.
+
+Live Tracking: Monitor shipments in real time using WebSockets or GraphQL subscriptions.
+
+Product List: Inventory and availability with CRUD operations.
+
+Commodity Stats: Overview dashboard with charts and KPIs.
+
+📊 Demo Data
+Sample inserts are provided in query.sql:
+
+Huile de Palme RSPO
+
+Jus de Mangue
+
+Tilapia
+
+Savon Kifebe
+
+This dataset illustrates multi-sector commodity management and can be extended for custom demos.
+
+🔄 CI/CD Pipeline
+Implemented with CircleCI + Vercel:
+
+Install dependencies
+
+bash
+npm ci
+Build
+
+bash
+npm run build
+Test
+
+bash
+npm test -- --coverage
+Deploy
+
+bash
+vercel --token $VERCEL_TOKEN
+🔐 Environment Variables
+Configured in CircleCI project settings:
+
+VERCEL_TOKEN → Deployment authentication
+
+DB_URL → Postgres connection string
+
+📡 API Contract
+See [Il semble que le résultat n’était pas sûr à afficher. Changeons un peu et essayons autre chose !] for dependencies and component interactions.
+
+Defines React component boundaries.
+
+Documents REST/GraphQL endpoints.
+
+Ensures traceability across services.
+
+✍️ Pitch Angle for Technical Publications
+This project is ideal for a deep technical tutorial because it combines:
+
+Real-world supply chain context (traceability, logistics).
+
+Modern frontend stack (React, live tracking).
+
+CI/CD best practices (CircleCI + Vercel).
+
+Database integration (Postgres demo data).
+
+A potential article could be titled:
+“Building a Real-Time Traceability Platform with React, CircleCI, and Vercel”  
+➡️ It would walk readers through architecture, pipeline setup, and deployment, while grounding the tutorial in a practical commodity management use case.
+
 # Traceability & Logistics Platform
 
 ## Overview
