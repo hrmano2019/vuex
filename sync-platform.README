@@ -20,3 +20,21 @@ This repository provides a production-ready architectural pattern that pairs **C
 ---
 
 ## 🏗 System Architecture
+---
+
+## ✨ Key Features
+
+- **Sub-10ms Local Writes:** Reads and writes execute immediately against the client database.
+- **Automated Conflict Resolution:** Implements Last-Write-Wins (LWW) with vector clock verification for concurrent edits.
+- **Exponential Backoff Retry:** Smart queue management that throttles payload delivery during intermittent network connectivity.
+- **Zero-Dependency Core:** Lightweight, framework-agnostic client engine compatible with React, Vue, and plain JS.
+
+---
+
+## 🚀 Quick Start
+
+### 1. Clone & Install
+```bash
+git clone [https://github.com/your-username/local-first-sync.git](https://github.com/your-username/local-first-sync.git)
+cd local-first-sync
+npm install
