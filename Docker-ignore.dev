@@ -1,0 +1,40 @@
+# Node.js dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Build outputs
+dist
+build
+.cache
+.tmp
+
+# Test & coverage
+coverage
+*.lcov
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE & editor configs
+.vscode/
+.idea/
+*.swp
+
+# Environment & secrets
+.env
+.env.local
+.env.*.local
+
+# Logs
+logs
+*.log
+*.out
+*.err
+
+# Docker & Git
+Dockerfile*
+.dockerignore
+.git
+.gitignore
