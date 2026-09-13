@@ -1,0 +1,53 @@
+---
+
+### README 2: Event-Driven Webhook Automation & Pipeline Resilience
+*Use this for pitches centered on API integrations, workflow automation, n8n, and cloud infrastructure.*
+
+```markdown
+# 🔄 Fault-Tolerant Event-Driven Automation Pipeline
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
+![Node.js](https://img.shields.io/badge/Node.js-18.x-green.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+
+> **Live Production Dashboard:** [https://event-automation-pipeline.vercel.app](https://event-automation-pipeline.vercel.app)  
+> **Official Portal:** [https://techapplied.it.com](https://techapplied.it.com)
+
+A robust, enterprise-grade event pipeline engineered to handle high-volume webhook payloads, API rate limiting, and automated failover orchestration using custom webhook receivers and **n8n / Serverless Handlers**.
+
+---
+
+## 📌 Problem Statement
+
+B2B applications heavily rely on webhooks for third-party integrations (Twilio, Payment Gateways, CRMs). Under heavy traffic bursts, unbuffered webhook receivers fail due to rate limits, timeouts, or unhandled 5xx response errors—leading to dropped events and incomplete business workflows.
+
+This project outlines a **Zero-Loss Webhook Processing Architecture** that guarantees idempotent execution, payload validation, and automatic retries.
+
+---
+
+## 🛠 Tech Stack & Tools
+
+- **Frontend & Admin API:** Next.js / TypeScript (Hosted on Vercel)
+- **Pipeline Orchestration:** Custom Webhook Handlers + n8n Event Nodes
+- **Database / Logs:** Supabase / PostgreSQL
+- **Monitoring:** Real-time event log viewer with payload inspection
+
+---
+
+## ⚡ Pipeline Architecture
+
+1. **Ingestion Layer:** Serverless API endpoints receive incoming POST requests and immediately return a `202 Accepted` response while pushing the raw payload to an isolated queue.
+2. **Validation & Filtering:** Cryptographic signature verification (HMAC-SHA256) and schema validation.
+3. **Execution & Fallback:** Webhook dispatcher routes payloads to downstream services with automatic exponential retry on failure.
+
+---
+
+## 🚀 One-Click Vercel Deployment
+
+Deploy your own instance of this processing pipeline directly to Vercel:
+
+1. Click the **Deploy with Vercel** button above.
+2. Add your environment keys:
+   ```env
+   WEBHOOK_SECRET=your_hmac_secret_here
+   DATABASE_URL=your_database_connection_string
